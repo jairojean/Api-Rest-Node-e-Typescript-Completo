@@ -1,5 +1,5 @@
 import { server } from "./server";
 
 server.listen(3333, ()=>{
-    console.log("API ROdando...");
+  console.log("API ROdando...");
 });
