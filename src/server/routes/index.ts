@@ -1,4 +1,5 @@
-import { Router } from "express";
+import { Router , Request} from "express";
+import { CitiesController } from './../controllers';
 
 const router = Router();
 
@@ -6,10 +7,10 @@ router.get('/', (req,res) => {
     return res.send('Ola DEV');
 });
 
-router.post('/create',(req, res) => {
-    console.log(req.body);
 
-    return res.status(400).json(req.body);
-});
+// cities
+router.post('/city',CitiesController.createbodyValidator,CitiesController.create);
+
+
 
 export {router};
