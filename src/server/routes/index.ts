@@ -9,7 +9,10 @@ router.get('/', (req,res) => {
 
 
 // cities
-router.post('/city',CitiesController.createbodyValidator,CitiesController.create);
+router.post('/city'
+    ,CitiesController.createBodyValidator,
+    CitiesController.createQueryValidator,
+    CitiesController.create);
 
 
 

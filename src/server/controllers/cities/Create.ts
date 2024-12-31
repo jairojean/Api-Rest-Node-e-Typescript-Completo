@@ -1,17 +1,17 @@
 import { Request, RequestHandler, Response } from "express";
 import * as yup from "yup";
+import { validation } from '../../shared/middlewares';
 
 interface ICity {
   name: string;
   state: string;
 }
-
 const bodyValidation: yup.ObjectSchema<ICity> = yup.object().shape({
-  name: yup.string().required().min(2),
-  state: yup.string().required().min(2),
-});
+    name: yup.string().required().min(2),
+    state: yup.string().required().min(2),
+  });
 
-export const createbodyValidator: RequestHandler = async(req, res, next) => {
+export const createBodyValidator: RequestHandler = async(req, res, next) => {
     try {
          await bodyValidation.validate(req.body, { abortEarly: false });
          return next();
@@ -28,8 +28,34 @@ export const createbodyValidator: RequestHandler = async(req, res, next) => {
           return res.status(400).json({ errors: validationErrors });
         }
     }
-    
 };
+
+interface IFilter{
+    filter?: string;
+}
+const queryValidator: yup.ObjectSchema<IFilter> = yup.object().shape({
+  filter: yup.string().required().min(2),
+ 
+});
+export const createQueryValidator: RequestHandler = async(req, res, next) => {
+    try {
+         await queryValidator.validate(req.query, { abortEarly: false });
+         return next();
+      } catch (error) {
+        if (error instanceof yup.ValidationError) {
+          const validationErrors: Record<string, string> = {};
+    
+          error.inner.forEach((err) => {
+            if (err.path) {
+              validationErrors[err.path] = err.message;
+            }
+          });
+          return res.status(400).json({ errors: validationErrors });
+        }
+    }
+};
+
+export const createValidation = validation();
 
 
 export const create = async (req: Request<{}, {}, ICity>, res: Response) => {
