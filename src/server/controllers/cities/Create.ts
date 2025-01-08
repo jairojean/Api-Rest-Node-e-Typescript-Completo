@@ -8,6 +8,7 @@ interface ICity {
 }
 interface IFilter{
     filter?: string;
+
 }
 
 export const createBodyValidator = validation({
