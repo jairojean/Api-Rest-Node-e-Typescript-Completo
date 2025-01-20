@@ -29,10 +29,11 @@ export const validation: tValidation = (schemas) => async (req, res, next) => {
             }
         })
     );
-
     if (Object.keys(errorsResult).length === 0) {
-        return next();
+        return next(); // Chamando o próximo middleware
     } else {
-        return res.status(400).json({ errors: errorsResult });
+        // Em caso de erro, retorna a resposta de erro
+        res.status(400).json({ errors: errorsResult });
     }
+    
 };

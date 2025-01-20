@@ -19,5 +19,14 @@ export const createBodyValidator = validation({
 
 
 export const create = async (req: Request<{}, {}, ICity>, res: Response) => {
-    return res.send(`A cidade  foi salva com sucesso!`);
+    try {
+        // Aqui você pode adicionar a lógica para salvar a cidade (banco de dados, etc)
+        console.log(`Cidade criada: `);
+
+        // Envia a resposta de sucesso
+        res.status(201).send(`A cidade  foi salva com sucesso!`);
+    } catch (error) {
+        // Caso ocorra um erro, envia uma resposta de erro
+        res.status(500).send("Erro ao criar a cidade.");
+    }
 };

@@ -25,5 +25,5 @@ export const GetAllValidator = validation((getSchema)=> ({
 
 
 export const GetAll = async (req: Request<{}, {},{}, IQueryProps>, res: Response) => {
-    return res.send(`A cidade  foi salva com sucesso!`);
+    return res.send(`chegou ao Get all!`);
 };

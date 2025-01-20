@@ -3,10 +3,6 @@ import { CitiesController } from './../controllers';
 
 const router = Router();
 
-router.get('/', (req,res) => {
-    return res.send('Ola DEV');
-});
-
 
 // cities
 router.post('/city',CitiesController.createBodyValidator,CitiesController.create);
@@ -16,3 +12,4 @@ router.put('/city/:id',CitiesController.UpdateByIdValidation,CitiesController.Up
 router.delete('/city/:id',CitiesController.DeleteValidation,CitiesController.DeleteById);
 
 export {router};
+

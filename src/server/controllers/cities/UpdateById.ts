@@ -22,7 +22,7 @@ export const UpdateByIdValidation = validation((getSchema)=> ({
 
 export const UpdateById = async (req: Request<IParamProps>, res: Response) => {
     console.log(req.params);
-    return res.send(`Get by id`);
+    return res.send(`Update by id`);
 };
 
  
