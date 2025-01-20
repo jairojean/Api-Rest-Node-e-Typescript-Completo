@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
-import { SchemaOf, ValidationError } from 'yup';
+import { ObjectSchema, ValidationError } from 'yup';
 
 type TProperty = 'body' | 'params' | 'query';
-type TALLSchemas = Record<TProperty, SchemaOf<any>>;
+type TALLSchemas = Record<TProperty, ObjectSchema<any>>;
 type tValidation = (schemas: Partial<TALLSchemas>) => RequestHandler;
 
 export const validation: tValidation = (schemas) => async (req, res, next) => {
