@@ -11,14 +11,7 @@ export async function up(knex: Knex) {
       table.string('fullName').index().notNullable();
       table.string('email').unique().notNullable();
 
-      table
-        .bigInteger('cityId')
-        .index()
-        .notNullable()
-        .references('id')
-        .inTable(ETableNames.city)
-        .onUpdate('CASCADE')
-        .onDelete('RESTRICT');
+
 
 
       table.comment('Tabela usada para armazenar peoples do sistema.');
