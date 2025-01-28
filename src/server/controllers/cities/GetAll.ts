@@ -13,7 +13,12 @@ interface IFilter{
 
 }
 
-
+export const GetAllValidator = validation((getSchema)=> ({
+    query: getSchema<IQueryProps>(yup.object().shape({
+        page: yup.number().notRequired().min(3).moreThan(0),
+        limit: yup.number().notRequiredrequired().min(3).moreThan(0),
+        filter: yup.string().required().min(3),
+    })),
 }));
 
  

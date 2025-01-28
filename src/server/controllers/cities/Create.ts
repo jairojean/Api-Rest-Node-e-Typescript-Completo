@@ -1,33 +1,30 @@
-import { Request, RequestHandler, Response } from "express";
-import * as yup from "yup";
-import { validation } from '../../shared/middlewares';
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import * as yup from 'yup';
 
-interface ICity {
- 
-}
-interface IFilter{
-    filter?: string;
+import { CityProvider } from '../../database/providers/city';
+import { validation } from '../../shared/middleware';
+import { ICity } from '../../database/models';
 
-}
 
-export const createBodyValidator = validation({
-    body: yup.object().shape({
-        name: yup.string().required().min(2),
-      }),
-      
-});
+interface IBodyProps extends Omit<ICity, 'id'> { }
 
+export const createValidation = validation((getSchema) => ({
+  body: getSchema<IBodyProps>(yup.object().shape({
+    nome: yup.string().required().min(3).max(150),
+  })),
+}));
 
 export const create = async (req: Request<{}, {}, ICity>, res: Response) => {
+  const result = await CityProvider.create(req.body);
 
-    try {
-        // Aqui você pode adicionar a lógica para salvar a cidade (banco de dados, etc)
-        console.log(`Cidade criada: `);
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    });
+  }
 
-        // Envia a resposta de sucesso
-        res.status(201).send(`A cidade  foi salva com sucesso!`);
-    } catch (error) {
-        // Caso ocorra um erro, envia uma resposta de erro
-        res.status(500).send("Erro ao criar a cidade.");
-    }
+  return res.status(StatusCodes.CREATED).json(result);
 };
